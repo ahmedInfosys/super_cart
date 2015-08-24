@@ -57,7 +57,7 @@ public class find_people extends HttpServlet {
 
 		System.out.println(sql_command);
 		
-		search_table += "<div class=\"container-fluid\"> <table class=\"table table-striped table-bordered\">";
+		search_table += "<div class=\"container\"> <table class=\"table table-striped table-bordered\">";
 		search_table +=  "<h3>"  + "Search results:" + "</h3>";
 		search_table += "<thread>";
 		search_table += "<tr>"; 
@@ -78,7 +78,7 @@ public class find_people extends HttpServlet {
 					search_table +=  "<tr>";
 					search_table +=  "<td> <a href=\"People_details?customer_ID="+ result.getInt("ID") +" \"> "+ result.getString("First_Name") + " </a></td>";
 					search_table +=  "<td >" + result.getString("Last_Name") + "</td>" ;
-					search_table +=  "</tr> <br/>";
+					search_table +=  "</tr>";
 			    }
 			    //average = sum/count;
 			    

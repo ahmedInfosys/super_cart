@@ -47,12 +47,12 @@ public class people_details extends HttpServlet {
 					ResultSet result = preStatement.executeQuery();
 				
 				    while(result.next()){
-				    	people_details += "<h3> Name:  "+ result.getString("first_name") + "  " + result.getString("last_name")+ "</h3>" ;
-				    	people_details += "<h3> Address: "   + result.getString("street_address") + "</h3>";
-				    	people_details += "<h3> " + result.getString("city") +", " + result.getString("state") + "   " + result.getInt( "zip_code") + "</h3>";
-				    	people_details += "<h3> Email Address: "   + result.getString("email_address") + "</h3>";
-				    	people_details += "<h3> Position: "   + result.getString("position") + "</h3>";
-				    	people_details += "<h3> Company: "   + result.getString("company") + "</h3>";
+				    	people_details += "<p><b> Name:  </b>"+ result.getString("first_name") + "  " + result.getString("last_name")+ "</p>" ;
+				    	people_details += "<p><b> Address: </b>"   + result.getString("street_address") + "</p>";
+				    	people_details += "<p> " + result.getString("city") +", " + result.getString("state") + "   " + result.getInt( "zip_code") + "</p>";
+				    	people_details += "<p><b> Email Address: </b>"   + result.getString("email_address") + "</p>";
+				    	people_details += "<p><b> Position: </b>"   + result.getString("position") + "</p>";
+				    	people_details += "<p><b> Company: </b>"   + result.getString("company") + "</p>";
 				    	
 				    }
 				    
