@@ -1,0 +1,20 @@
+create table product(
+ID integer primary key,
+Name varchar(50),
+description varchar(1000),
+price decimal(10,2),
+quantity integer,
+picture varchar(1000),
+UserID integer);
+
+
+create table online_customer(
+ID integer primary key,
+firstname varchar(50),
+lastname varchar(50));
+
+select * from product;
+select * from online_customer;
+
+alter table product add purchase_date varchar(40);
+update product set purchase_date =  'SUN 08/30/2015 11:00pm';
