@@ -1,7 +1,9 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 
 
@@ -33,7 +35,7 @@ public class Product implements Serializable {
 
 	private int quantity;
 
-	private int userid;
+	private long userid;
 
 	public Product() {
 	}
@@ -94,11 +96,11 @@ public class Product implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public int getUserid() {
+	public long getUserid() {
 		return this.userid;
 	}
 
-	public void setUserid(int userid) {
+	public void setUserid(long userid) {
 		this.userid = userid;
 	}
 

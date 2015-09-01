@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -42,7 +43,7 @@ right: 0px;
 
 <nav class="navbar navbar-default" >
 	<ul class="nav navbar-nav navbar-left">
-	   <li role="presentation" >Welcome <b>${welcome}</b></li>
+	   <li role="presentation" >Welcome <b>${sessionScope.User.getFirstname()} ${sessionScope.User.getLastname()}</b></li>
 	    <li role="presentation"><a href="/Shopping_cart/My_Profile"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
 	   <li role="presentation"><a href="/Shopping_cart/List_products"><span class="glyphicon glyphicon-book"></span>Products</a></li>
 	   <li role="presentation"><a href="/Shopping_cart/my_shopping_cart"><span class="glyphicon glyphicon-shopping-cart"></span>Shopping cart</a></li>
@@ -69,7 +70,18 @@ right: 0px;
   </div><!-- /.col-lg-6 -->
 </div><!-- /.row -->
 <br><br>
-  ${filtered_products}
+<c:forEach var="found_product" items="${found_products}">
+<nav class="navbar navbar-default col-sm-10"> 
+			 <p class="navbar-text navbar-default col-sm-offset-10" ><b>Product Name: </b>${found_product.getName()}  </p>
+		     <ul class="nav nav-pills nav-right col-sm-offset-9"> 
+                    <p class="navbar-text navbar-default"><b>Price: </b>${found_product.getPrice()}<b> Qty: </b> ${found_product.getQuantity()}  </p>
+			        <li role="presentation" class="active"><a href="Product_details?productID=${found_product.getId()}" > 
+				        <span class="glyphicon glyphicon-align-justify"></span> View</a></li>
+			        <li role="presentation" class="active"><a href="my_shopping_cart?productID=${found_product.getId()}" ><span class="glyphicon glyphicon-plus"></span> Add</a></li>
+			 </ul>
+			 </nav>
+</c:forEach>
+
 
 </body>
 </html>

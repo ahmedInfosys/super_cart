@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head> 
@@ -21,8 +22,8 @@
 <body>
 <nav class="navbar navbar-default" >
 	<ul class="nav navbar-nav navbar-left">
-	   <li role="presentation" >Welcome <b>${welcome}</b></li>
-	    <li role="presentation"><a href="/Shopping_cart/My_Profile"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+	   <li role="presentation" >Welcome <b>${sessionScope.User.getFirstname()} ${sessionScope.User.getLastname()} </b></li>
+	   <li role="presentation"><a href="/Shopping_cart/My_Profile"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
 	   <li role="presentation"><a href="/Shopping_cart/List_products"><span class="glyphicon glyphicon-book"></span>Products</a></li>
 	   <li role="presentation"><a href="/Shopping_cart/my_shopping_cart"><span class="glyphicon glyphicon-shopping-cart"></span>Shopping cart</a></li>
 	   <li role="presentation"><a href="/Shopping_cart/ready_checkout">Check out</a></li>
@@ -39,8 +40,12 @@
 			Product details
 		</div>	
 		<div class ="panel-body">
-		      ${Details}
-		      
+		    <p><b> Name:        </b> ${sessionScope.product_details.getName()}</p>
+		    <p><b> Description: </b> ${sessionScope.product_details.getDescription()} </p>
+		    <p><b> Quantity:    </b> ${sessionScope.product_details.getQuantity()} </p>
+		    <p><b> Price:       </b><fmt:formatNumber value='${sessionScope.product_details.getPrice()}' type="currency"  /> </p>
+		    <ul class="nav nav-pills nav-right col-sm-offset-9">
+		<li role="presentation" class="active"><a href="my_shopping_cart?productID=${sessionScope.product_details.getId()}" \><span class="glyphicon glyphicon-plus"> Add to cart</a></li></ul> 
 	   </div>
 	</div>
 

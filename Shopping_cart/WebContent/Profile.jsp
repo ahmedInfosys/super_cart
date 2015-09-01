@@ -41,8 +41,8 @@ right: 0px;
 <body background="http://www.freewallpaperfullhd.com/wp-content/uploads/2015/02/Nature-Wallpaper-HD-1920x1080.jpg">
 
 <nav class="navbar navbar-default" >
-	<ul class="nav navbar-nav navbar-left">
-	   <li role="presentation" >Welcome <b>${welcome}</b></li>
+	<ul class="nav navbar-nav navbar-left">  
+	   <li role="presentation" >Welcome <b>${sessionScope.User.getFirstname()} ${sessionScope.User.getLastname()}</b></li>
 	    <li role="presentation"><a href="/Shopping_cart/My_Profile"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
 	   <li role="presentation"><a href="/Shopping_cart/List_products"><span class="glyphicon glyphicon-book"></span>Products</a></li>
 	   <li role="presentation"><a href="/Shopping_cart/my_shopping_cart"><span class="glyphicon glyphicon-shopping-cart"></span>Shopping cart</a></li>
@@ -60,6 +60,9 @@ right: 0px;
 			Person Detail
 		</div>	
 		<div class ="panel-body">
+	  		<p><span class="glyphicon glyphicon-user"></span><b> Name:  </b> ${sessionScope.User.getFirstname()} ${sessionScope.User.getLastname()}</p> 
+    		<p><span class="glyphicon glyphicon-envelope"> </span><b> Email Address: </b>${sessionScope.User.getEmail()}  </p>
+    		<p><span class="glyphicon glyphicon-calendar"> </span><b> Join Date: </b> ${sessionScope.User.getJoinDate()}   </p>
 		      ${Details}
 	</div>
 	</div>

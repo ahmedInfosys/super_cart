@@ -1,7 +1,9 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 
 
@@ -30,7 +32,7 @@ public class ShoppingCart implements Serializable {
 	private double unitPrice;
 
 	@Column(name="UNIT_QUANTITY")
-	private long unitQuantity;
+	private int unitQuantity;
 
 	@Column(name="USER_ID")
 	private long userId;
@@ -70,11 +72,11 @@ public class ShoppingCart implements Serializable {
 		this.unitPrice = unitPrice;
 	}
 
-	public long getUnitQuantity() {
+	public int getUnitQuantity() {
 		return this.unitQuantity;
 	}
 
-	public void setUnitQuantity(long unitQuantity) {
+	public void setUnitQuantity(int unitQuantity) {
 		this.unitQuantity = unitQuantity;
 	}
 

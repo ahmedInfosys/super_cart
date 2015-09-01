@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head> 
+<head>    
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">  
@@ -23,8 +23,8 @@
     <div class="col-sm-6 col-sm-offset-5">
       <ul class="nav navbar-nav">
       	<li><a><b>Sign In Below</a></li></b><br><br>
-      </ul>
-    </div>
+      </ul> 
+    </div>  
 </nav>
 <br><br><br>
 <div class ="col-sm-4 col-sm-offset-4">

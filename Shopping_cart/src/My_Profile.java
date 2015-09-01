@@ -30,14 +30,14 @@ public class My_Profile extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String  FirstName, LastName, Email, zipCode, welcome = " ", profile_image;
+		String  FirstName = null, LastName = null, Email = null, zipCode, welcome = " ", profile_image;
 		
 		
 		String  Password;
 		String  invalid = "", create_an_account = "";
 		
 		
-		String   people_details = "", posts = "", post_field = "";
+		String   people_details = "",Join_date = null;
 		String  Page = "";
 		long ID = 0;
 		
@@ -55,9 +55,10 @@ public class My_Profile extends HttpServlet {
 			
 			if(!All_DB.ExistsorNot(Email).isEmpty()){
 				Page = "/SignUp.jsp";
-				String Already_Exists = "The user " + Email + " is already exists, please <a href=\"/Bullhorm/SignIn.jsp\"> sign in.</a>" ;
+				String Already_Exists = "The user " + Email + " is already exists, please <a href=\"/Shopping_cart/SignIn.jsp\"> sign in.</a>" ;
 				request.setAttribute("alreadyin", Already_Exists);
 			}else{
+				
 				Page = "/Profile.jsp";
 				Date now = new Date();
 
@@ -74,9 +75,11 @@ public class My_Profile extends HttpServlet {
 				ID = user.getId();
 				
 				HttpSession session = request.getSession();
-	        	session.setAttribute("UserID", ID);
+	        	session.setAttribute("User", user);/////////////////////////change////////////////////////
+	        	All_DB store_in_db = new All_DB();
+				session.setAttribute("All_DB", store_in_db);
 	        	
-	        	welcome += FirstName + " " + LastName;
+	        	//welcome += FirstName + " " + LastName;
 			}
 		}else if (request.getParameter("password") != null){
 			
@@ -95,50 +98,49 @@ public class My_Profile extends HttpServlet {
 				
 				System.out.println("Invalid");
 				Page = "/SignIn.jsp";
+				
 				invalid = "Invalid Email or/and password";
-				create_an_account = "<a href=\"/Bullhorm/SignUp.jsp\">Create an account</a>";
+				create_an_account = "<a href=\"/Shopping_cart/SignUp.jsp\">Create an account</a>";
 				request.setAttribute("invalid_user", invalid);
 				request.setAttribute("Sign_up", create_an_account);
 			}
 			else{
+				
 	        	HttpSession session = request.getSession();
-	        	session.setAttribute("UserID", single_user.getId());
+	        	session.setAttribute("User", single_user);/////change
+	        	All_DB store_in_db = new All_DB();
+				session.setAttribute("All_DB", store_in_db);
 	        	Page = "/Profile.jsp";
-	        	session = request.getSession(true);
-				ID = Long.parseLong(session.getAttribute("UserID").toString());
+//	        	session = request.getSession(true);
+//				ID = Long.parseLong(session.getAttribute("UserID").toString());
+//				FirstName = All_DB.select_single_id(Long.parseLong(session.getAttribute("UserID").toString())).getFirstname();
+//				LastName = All_DB.select_single_id(Long.parseLong(session.getAttribute("UserID").toString())).getLastname();
+//				Email =  All_DB.select_single_id(ID).getEmail();
+//				Join_date =  All_DB.select_single_id(ID).getJoinDate();
+//				welcome += FirstName + " " + LastName + " !";
 			}
 			
 			
 		}else if( request.getParameter("user_ID") != null){
-				ID = Long.parseLong(request.getParameter("user_ID"));
+				//ID = Long.parseLong(request.getParameter("user_ID"));
 				Page = "/Profile.jsp";
 				
 		}else {
 				System.out.println("GoTO my profile");
-				HttpSession session = request.getSession(true);
-				ID = Long.parseLong(session.getAttribute("UserID").toString());
+//				HttpSession session = request.getSession(true);
+//				ID = Long.parseLong(session.getAttribute("UserID").toString());
+//				FirstName = All_DB.select_single_id(Long.parseLong(session.getAttribute("UserID").toString())).getFirstname();
+//				LastName = All_DB.select_single_id(Long.parseLong(session.getAttribute("UserID").toString())).getLastname();
+//				Email =  All_DB.select_single_id(ID).getEmail();
+//				Join_date =  All_DB.select_single_id(ID).getJoinDate();
+//				welcome += FirstName + " " + LastName + " !";
 			    Page = "/Profile.jsp";
 		}
-		 
-
-		HttpSession session = request.getSession(true);
-		//Display Welcome user on top of screen.
-		if(session.getAttribute("UserID") != null){
-			
-			
-			FirstName = All_DB.select_single_id(Long.parseLong(session.getAttribute("UserID").toString())).getFirstname();
-			LastName = All_DB.select_single_id(Long.parseLong(session.getAttribute("UserID").toString())).getLastname();
-			welcome += FirstName + " " + LastName + " !";
-		}
-		
-		
-		FirstName = All_DB.select_single_id(ID).getFirstname();
-		LastName = All_DB.select_single_id(ID).getLastname();
-		Email =  All_DB.select_single_id(ID).getEmail();
-		String Join_date =  All_DB.select_single_id(ID).getJoinDate();
 
 		
+
 		
+
 		
 		//Display personal details
 		people_details += "<p><span class=\"glyphicon glyphicon-user\"></span><b> Name:  </b>"+ FirstName + "  " + LastName + "</p>" ;
@@ -147,47 +149,11 @@ public class My_Profile extends HttpServlet {
     	
     	 String Sign_out ="<a href=\"/Bullhorm/SignIn.jsp\"> Sign out</a> ";
     	 String account =  "";
-    	 
-//    	 //User Posts
-//    	 if(PostDB.select_all_by_user(ID) != null){
-//    		 for(Post post:PostDB.select_all_by_user(ID)){
-//        		 post_date = post.getPostDate();
-//        		 single_post = post.getPostContent();
-//        		 FirstName = UserDB.select_single_id(ID).getFirstname();
-//        		 LastName = UserDB.select_single_id(ID).getLastname();
-//        		 profile_image = UserDB.select_single_id(ID).getPictureLink();
-//        		 
-//        		 post_id = post.getPostId();
-//        		 post_user_id = post.getPostUserId();
-//        		 
-//        		 
-//        		 
-//        		 posts += "<nav class=\"navbar navbar-default col-sm-10\">" + " <p class=\"navbar-text navbar-left\" ><b>Post: </b>"+ single_post + "</p><br><br><br>" ;
-//        		 posts += "<img src=" + profile_image + " width=\"100 height=\"100\"><br><br><br><br><br>";
-//             	 posts += "<p class=\"navbar-text navbar-right\"> <a href=\"user_profile?user_ID=" + post_user_id + "\">" + FirstName + " " + LastName + "</a> <br>";
-//        		 posts += "<b>"+ post_date + "</b><br><a  href=\"Posts?post_id=" +  post_id + "&Post_User_ID=" + post_user_id + "\">Click here to see comments </a></p></div></nav>";
-//
-//        	 }
-//    	 }
-//    	 
-//    	 post_field += "<div class=\"container\">"
-//    	 		+ " <form role=\"form\" method=\"post\" action=\"put_post\"> "
-//    	 		+ " <div > "
-//    	 		+ "<textarea maxlength=\"100\" class=\"form-control\" rows=\"4\" cols=\"200\" name=\"post\" placeholder=\"What's in your mind?\">" +
-//    			 "</textarea><br> "
-//    			 + "</div>"
-//    			 + "<div class=\"form-group col-sm-4 col-sm-offset-8\">"
-//    			 + "<button type=\"submit\" value = \"submit\" class= \"button btn-primary form-control \"><span class=\"glyphicon glyphicon-pencil\"></span> Post</button>"
-//			     + "</div>"
-//    			 + "</form>"
-//			     + "</div>";
-//    	 
-    	 
-    	 
-    	 request.setAttribute("welcome", welcome);
+
+    	 //request.setAttribute("welcome", welcome);
     	 request.setAttribute("sign_in_out", Sign_out );
-	     request.setAttribute("account", account);
-	     request.setAttribute("Details", people_details);
+//	     request.setAttribute("account", account);
+//	     request.setAttribute("Details", people_details);
 
 
 	     getServletContext().getRequestDispatcher(Page).forward(request,response);

@@ -2,6 +2,8 @@
 
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.All_DB;
+import model.OnlineCustomer;
+import model.Product;
 import model.ShoppingCart;
 import model.Shopping_Assns;
 
@@ -36,12 +40,8 @@ public class my_shopping_cart extends HttpServlet {
 		
 
 		HttpSession session = request.getSession(true);
-		long ID = Long.parseLong(session.getAttribute("UserID").toString());
-		String  welcome = "";
-
-		FirstName = All_DB.select_single_id(ID).getFirstname();
-		LastName = All_DB.select_single_id(ID).getLastname();
-		welcome += FirstName + " " + LastName + " !";
+		OnlineCustomer user = new OnlineCustomer();
+		user = (OnlineCustomer) session.getAttribute("User");
 		
 		 String Sign_out ="<a href=\"/Shopping_cart/SignIn.jsp\"> Sign out</a> ";
 		 System.out.println("Request.getParamater Value = " + request.getParameter("ProductID"));
@@ -52,19 +52,19 @@ public class my_shopping_cart extends HttpServlet {
 			double Price;
 
 			
-			if(request.getParameter("ProductID") != null){
+			if(request.getParameter("productID") != null){
 				
-				long product_id = Long.parseLong(request.getParameter("ProductID"));
-				ProductName = All_DB.select_single_product(product_id).getName();
-				Description =  All_DB.select_single_product(product_id).getDescription();
-				Quantity = All_DB.select_single_product(product_id).getQuantity();
-				Price = All_DB.select_single_product(product_id).getPrice();
+				long product_id = Long.parseLong(request.getParameter("productID"));
+				Product pro = new Product();
+				pro.setName(All_DB.select_single_product(product_id).getName());
+				pro.setQuantity(All_DB.select_single_product(product_id).getQuantity());
+				pro.setPrice(All_DB.select_single_product(product_id).getPrice());
 				
 				ShoppingCart my_cart = new ShoppingCart();
 				my_cart.setProductId(product_id);
-				my_cart.setUserId(ID);
-				my_cart.setUnitPrice(Price);
-				my_cart.setUnitQuantity(Quantity);
+				my_cart.setUserId(user.getId());
+				my_cart.setUnitPrice(All_DB.select_single_product(product_id).getPrice());
+				my_cart.setUnitQuantity(All_DB.select_single_product(product_id).getQuantity());
 				
 				Shopping_Assns cart_class = new Shopping_Assns();
 				cart_class.setCart(my_cart);
@@ -78,47 +78,45 @@ public class my_shopping_cart extends HttpServlet {
 			}
 			
 			
-			double sum = 0;
-			cart_products+= "<nav class=\"navbar navbar-default col-sm-10\">" ;
-			if(All_DB.select_shopping_cart(ID) != null){
-				ShoppingCart my_cart = new ShoppingCart();
+			
+			double Total = 0;
+			//cart_products+= "<nav class=\"navbar navbar-default col-sm-10\">" ;
+			if(All_DB.select_shopping_cart(user.getId()) != null){
 				
-				for(ShoppingCart My_cart:All_DB.select_shopping_cart(ID)){
-					long product_id = My_cart.getProductId();
-					
-					ProductName = All_DB.select_single_product(product_id).getName();
-					Quantity = All_DB.select_single_product(product_id).getQuantity();
-					Price = All_DB.select_single_product(product_id).getPrice();
-				    
-					sum += Price * Quantity;
-					
-					cart_products+= "<nav class=\"navbar navbar-default col-sm-10\">" +
-							 " <p class=\"navbar-text navbar-default col-sm-offset-10\" ><b>Product Name: </b>"+ ProductName + "</p>" +
-							"<ul class=\"nav nav-pills nav-right col-sm-offset-9\">" + "<p class=\"navbar-text navbar-default\"><b>Price: </b>" +  currency.format(Price) +
-							"</a> <b> Qty: " + Quantity +  "</b></p>";
-					cart_products+= "<li role=\"presentation\" class=\"active\"><a href=\"my_shopping_cart?remove_product=" + product_id + "\">Remove Item</a></li>" + "<li role=\"presentation\" class=\"active\"><a href=\"my_shopping_cart?remove_all=" + ID + "\">Remove all</a></li>" +
-							"</ul> </nav>" ;
-					
-//					cart_products+= " <p class=\"navbar-text navbar-default \" ><b>Product Name: </b>"+ ProductName  +
-//							"<b>Price: </b>" +  currency.format(Price) +
-//							"<b> Qty: " + Quantity +  "</b></p>";
-				 
-				}
-				cart_products += "<ul class=\"navbar-text nav-default \">" +
-						"-------------------------------------------------------------------"
-				+ "<p class=\"navbar-text navbar-right\"><b>Total: </b>" +  currency.format(sum);
-				cart_products += "</p></u1></nav>";//
-			}else{
-				cart_products = "<nav class=\"navbar navbar-default col-sm-10\"> Cart is Empty</nav>";
+				
+				List <ShoppingCart> my_cart = new ArrayList<ShoppingCart>();
+				my_cart = All_DB.select_shopping_cart(user.getId());
+				
+				session = request.getSession();
+				session.setAttribute("my_cart", my_cart);
+				All_DB store_in_db = new All_DB();
+				session.setAttribute("All_DB", store_in_db);
+				
+//				for(ShoppingCart My_cart:All_DB.select_shopping_cart(ID)){
+//					long product_id = My_cart.getProductId();
+//					
+//					ProductName = All_DB.select_single_product(product_id).getName();
+//					Quantity = All_DB.select_single_product(product_id).getQuantity();
+//					Price = All_DB.select_single_product(product_id).getPrice();
+//				    
+//					Total += Price * Quantity;
+//					
+//	
+//					
+//
+//				 
+//				}
+				
 			}
+			
 		
 		
 		
 		
-		 request.setAttribute("welcome", welcome);
+		 //request.setAttribute("welcome", welcome);
     	 request.setAttribute("sign_in_out", Sign_out );
-	     request.setAttribute("account", "");
-	     request.setAttribute("cart", cart_products);
+	     //request.setAttribute("account", "");
+	     //request.setAttribute("cart", cart_products);
 
 
 	     getServletContext().getRequestDispatcher("/my_shopping_cart.jsp").forward(request,response);

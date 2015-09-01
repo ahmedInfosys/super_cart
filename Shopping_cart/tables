@@ -26,6 +26,8 @@ update product set purchase_date =  'SUN 08/30/2015 11:00pm';
 select * from product;
 select * from online_customer;
 
+
+
 alter table online_customer add Join_date varchar(40);
 alter table online_customer add Email varchar(100);
 alter table online_customer add zipcode integer;
@@ -39,3 +41,4 @@ alter table shopping_cart add unit_price decimal(10,2);
 
 select * from shopping_cart;
 truncate table shopping_cart;
+truncate table online_customer;

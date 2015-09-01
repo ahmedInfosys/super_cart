@@ -1,7 +1,9 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 
 
@@ -29,7 +31,7 @@ public class OnlineCustomer implements Serializable {
 
 	private String lastname;
 
-	private int zipcode;
+	private long zipcode;
 
 	public OnlineCustomer() {
 	}
@@ -74,11 +76,11 @@ public class OnlineCustomer implements Serializable {
 		this.lastname = lastname;
 	}
 
-	public int getZipcode() {
+	public long getZipcode() {
 		return this.zipcode;
 	}
 
-	public void setZipcode(int zipcode) {
+	public void setZipcode(long zipcode) {
 		this.zipcode = zipcode;
 	}
 
