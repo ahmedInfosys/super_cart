@@ -1,8 +1,8 @@
 package model;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 
 /**
@@ -20,9 +20,16 @@ public class OnlineCustomer implements Serializable {
 	@GeneratedValue(strategy =  GenerationType.SEQUENCE,generator="ONLINE_CUSTOMER_SEQ")
 	private long id;
 
+	private String email;
+
 	private String firstname;
 
+	@Column(name="JOIN_DATE")
+	private String joinDate;
+
 	private String lastname;
+
+	private int zipcode;
 
 	public OnlineCustomer() {
 	}
@@ -35,6 +42,14 @@ public class OnlineCustomer implements Serializable {
 		this.id = id;
 	}
 
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getFirstname() {
 		return this.firstname;
 	}
@@ -43,12 +58,28 @@ public class OnlineCustomer implements Serializable {
 		this.firstname = firstname;
 	}
 
+	public String getJoinDate() {
+		return this.joinDate;
+	}
+
+	public void setJoinDate(String joinDate) {
+		this.joinDate = joinDate;
+	}
+
 	public String getLastname() {
 		return this.lastname;
 	}
 
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
+	}
+
+	public int getZipcode() {
+		return this.zipcode;
+	}
+
+	public void setZipcode(int zipcode) {
+		this.zipcode = zipcode;
 	}
 
 }

@@ -42,6 +42,6 @@
 </nav>  
 
 
-${products}
+${cart}
 </body>
 </html>

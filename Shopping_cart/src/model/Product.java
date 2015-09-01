@@ -1,9 +1,7 @@
 package model;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.math.BigDecimal;
 
 
@@ -28,14 +26,14 @@ public class Product implements Serializable {
 
 	private String picture;
 
-	private BigDecimal price;
+	private double price;
 
 	@Column(name="PURCHASE_DATE")
 	private String purchaseDate;
 
-	private BigDecimal quantity;
+	private int quantity;
 
-	private BigDecimal userid;
+	private int userid;
 
 	public Product() {
 	}
@@ -72,11 +70,11 @@ public class Product implements Serializable {
 		this.picture = picture;
 	}
 
-	public BigDecimal getPrice() {
+	public double getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(BigDecimal price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
@@ -88,19 +86,19 @@ public class Product implements Serializable {
 		this.purchaseDate = purchaseDate;
 	}
 
-	public BigDecimal getQuantity() {
+	public int getQuantity() {
 		return this.quantity;
 	}
 
-	public void setQuantity(BigDecimal quantity) {
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 
-	public BigDecimal getUserid() {
+	public int getUserid() {
 		return this.userid;
 	}
 
-	public void setUserid(BigDecimal userid) {
+	public void setUserid(int userid) {
 		this.userid = userid;
 	}
 

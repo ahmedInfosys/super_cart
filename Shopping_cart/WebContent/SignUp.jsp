@@ -17,31 +17,33 @@
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.min.js"></script>
-<title>Product List</title>
-<style>h1{background: black; text:white}
-
-</style>
-
+<title>Insert title here</title>
 </head>
-<body>
+<body style="background-color:#9999FF">
 
+<div class ="col-sm-4 col-sm-offset-4 ">
+<form class= "text-center" action="My_Profile"  method="post">
+<div>
+	${alreadyin}
+</div>
 
+First Name:
+<input type="text"  class="form-control" placeholder= "ex. John" name="fName" required> </input><br>
 
-<nav class="navbar navbar-default" >
-	<ul class="nav navbar-nav navbar-left">
-	   <li role="presentation" >Welcome <b>${welcome}</b></li>
-	    <li role="presentation"><a href="/Shopping_cart/My_Profile"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
-	   <li role="presentation"><a href="/Shopping_cart/List_products"><span class="glyphicon glyphicon-book"></span>Products</a></li>
-	   <li role="presentation"><a href="/Shopping_cart/my_shopping_cart"><span class="glyphicon glyphicon-shopping-cart"></span>Shopping cart</a></li>
-	   <li role="presentation"><a href="/Shopping_cart/ready_checkout">Check out</a></li>
-	   <li role="presentation"><a href="/Shopping_cart/Search"><span class="glyphicon glyphicon-search"></span>Search products</a></li>
-	</ul>
-	<ul class="nav navbar-nav navbar-right">
-		<li role="presentation" >${sign_in_out}</li>
-    </ul>
-</nav>  
+Last Name:
+<input type="text"  class="form-control" placeholder= "ex. Doe" name="lName" required> </input><br>
 
+Email:
+<input type="text" class="form-control" placeholder= "ex. email@domain.com" name="email" required></input><br>
 
-${products}
+Zip Code:
+<input type="number"  class="form-control" placeholder= "ex. 55555" name="zip" required></input><br>  
+
+Profile picture:
+<input type="text"  class="form-control" placeholder= "paste you picture link" name="img" ></input><br>
+
+<button   style="background-color:#CC66FF" type="submit"  class="form-control" value = "submit" class= "button btn-primary form-control">Create Account</button>
+</form>
+</div>
 </body>
 </html>

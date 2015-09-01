@@ -13,8 +13,29 @@ ID integer primary key,
 firstname varchar(50),
 lastname varchar(50));
 
-select * from product;
-select * from online_customer;
+create table shopping_cart(
+id integer primary key,
+product_id integer,
+user_id integer,
+purchase_date varchar(40),
+unit_quantity integer);
 
 alter table product add purchase_date varchar(40);
 update product set purchase_date =  'SUN 08/30/2015 11:00pm';
+
+select * from product;
+select * from online_customer;
+
+alter table online_customer add Join_date varchar(40);
+alter table online_customer add Email varchar(100);
+alter table online_customer add zipcode integer;
+
+update online_customer set email =  'ahmed1@hameed1.com' where ID = 1;
+update online_customer set zipcode = 80012 where id = 1;
+update online_customer set zipcode = 80112 where id = 2;
+
+
+alter table shopping_cart add unit_price decimal(10,2);
+
+select * from shopping_cart;
+truncate table shopping_cart;

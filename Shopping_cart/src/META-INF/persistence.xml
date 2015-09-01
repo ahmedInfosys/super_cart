@@ -4,10 +4,11 @@
 		<provider>  org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>model.OnlineCustomer</class>
 		<class>model.Product</class>
+		<class>model.ShoppingCart</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
-			<property name="javax.persistence.jdbc.user" value="system"/>
+			<property name="javax.persistence.jdbc.user" value="testdb"/>
 			<property name="javax.persistence.jdbc.password" value="password"/>
 			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
 		</properties>
