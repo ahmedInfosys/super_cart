@@ -51,7 +51,7 @@ public class List_products extends HttpServlet {
 						"<ul class=\"nav nav-pills nav-right col-sm-offset-9\">" + "<p class=\"navbar-text navbar-default\"><b>Price: </b>" +  currency.format(pro.getPrice()) +
 						"</a> <b> Qty: " + pro.getQuantity() +  "</b></p>";
 						
-				list_of_products+= "<li role=\"presentation\" class=\"active\"><a href=\"Product_details?productID=" + pro.getId() + "\"><span class=\"glyphicon glyphicon-plus\">View</a></li>" + "<li role=\"presentation\" class=\"active\"><a href=\"#\"><span class=\"glyphicon glyphicon-plus\">Add</a></li>" +
+				list_of_products+= "<li role=\"presentation\" class=\"active\"><a href=\"Product_details?productID=" + pro.getId() + "\"><span class=\"glyphicon glyphicon-plus\">View</a></li>" + "<li role=\"presentation\" class=\"active\"><a href=\"my_shopping_cart?ProductID=" + pro.getId() + "\"><span class=\"glyphicon glyphicon-plus\">Add</a></li>" +
 						"</ul> </nav>" ;
 			}
 			

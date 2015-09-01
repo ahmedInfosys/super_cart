@@ -69,6 +69,12 @@ public class my_shopping_cart extends HttpServlet {
 				Shopping_Assns cart_class = new Shopping_Assns();
 				cart_class.setCart(my_cart);
 				All_DB.insert(cart_class);
+			}else if(request.getParameter("remove_product") != null){
+				long product_id = Long.parseLong(request.getParameter("remove_product"));
+				All_DB.delete_item(product_id);
+			}else if(request.getParameter("remove_all") != null){
+				long user_id = Long.parseLong(request.getParameter("remove_all"));
+				All_DB.delete_cart(user_id);
 			}
 			
 			
@@ -86,16 +92,22 @@ public class my_shopping_cart extends HttpServlet {
 				    
 					sum += Price * Quantity;
 					
-
+					cart_products+= "<nav class=\"navbar navbar-default col-sm-10\">" +
+							 " <p class=\"navbar-text navbar-default col-sm-offset-10\" ><b>Product Name: </b>"+ ProductName + "</p>" +
+							"<ul class=\"nav nav-pills nav-right col-sm-offset-9\">" + "<p class=\"navbar-text navbar-default\"><b>Price: </b>" +  currency.format(Price) +
+							"</a> <b> Qty: " + Quantity +  "</b></p>";
+					cart_products+= "<li role=\"presentation\" class=\"active\"><a href=\"my_shopping_cart?remove_product=" + product_id + "\">Remove Item</a></li>" + "<li role=\"presentation\" class=\"active\"><a href=\"my_shopping_cart?remove_all=" + ID + "\">Remove all</a></li>" +
+							"</ul> </nav>" ;
 					
-					cart_products+= " <p class=\"navbar-text navbar-left \" ><b>Product Name: </b>"+ ProductName + "</p>" +
-							"<p class=\"navbar-text navbar-right\"><b>Price: </b>" +  currency.format(Price) +
-							"<b> Qty: " + Quantity +  "</b></p>";
-				
+//					cart_products+= " <p class=\"navbar-text navbar-default \" ><b>Product Name: </b>"+ ProductName  +
+//							"<b>Price: </b>" +  currency.format(Price) +
+//							"<b> Qty: " + Quantity +  "</b></p>";
+				 
 				}
-				cart_products += "-------------------------------------------------------------------";
-				cart_products += "<ul class=\"navbar-text nav-default \">" + "<p class=\"navbar-text navbar-default\"><b>Total: </b>" +  currency.format(sum);
-				cart_products += "</p></u1></nav>";
+				cart_products += "<ul class=\"navbar-text nav-default \">" +
+						"-------------------------------------------------------------------"
+				+ "<p class=\"navbar-text navbar-right\"><b>Total: </b>" +  currency.format(sum);
+				cart_products += "</p></u1></nav>";//
 			}else{
 				cart_products = "<nav class=\"navbar navbar-default col-sm-10\"> Cart is Empty</nav>";
 			}

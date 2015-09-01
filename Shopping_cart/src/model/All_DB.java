@@ -9,7 +9,8 @@ import java.util.List;
 	import javax.persistence.EntityManager;
 	import javax.persistence.EntityTransaction;
 	import javax.persistence.NoResultException;
-	import javax.persistence.TypedQuery;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 	import model.DBUtil;
 
@@ -276,6 +277,39 @@ import java.util.List;
 //			}
 //		}
 			
+		public static void delete_item (long product_id){
+			EntityManager em = DBUtil.getEmFactory().createEntityManager();
+			String qString = "delete from  ShoppingCart s where s.productId = :ID";
+			EntityTransaction trans = em.getTransaction();
+			trans.begin(); 
+			try{
+				Query q = em.createQuery(qString,  ShoppingCart.class);
+			    q.setParameter("ID", product_id).executeUpdate();
+			    trans.commit();
+			}catch(Exception e){
+				System.out.println(e);
+				trans.rollback();
+			}finally{
+				em.close();
+			}
+		}
+		
+		public static void delete_cart (long user_id){
+			EntityManager em = DBUtil.getEmFactory().createEntityManager();
+			String qString = "delete from  ShoppingCart s where s.userId = :ID";
+			EntityTransaction trans = em.getTransaction();
+			trans.begin(); 
+			try{
+				Query q = em.createQuery(qString,  ShoppingCart.class);
+			    q.setParameter("ID", user_id).executeUpdate();
+			    trans.commit();
+			}catch(Exception e){
+				System.out.println(e);
+				trans.rollback();
+			}finally{
+				em.close();
+			}
+		}
 		public static void delete(Shopping_Assns shopping_classes) {
 			EntityManager em = DBUtil.getEmFactory().createEntityManager();
 			EntityTransaction trans = em.getTransaction();
