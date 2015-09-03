@@ -1,7 +1,6 @@
 
 
 import java.io.IOException;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,30 +13,21 @@ import javax.servlet.http.HttpSession;
 
 import model.All_DB;
 import model.OnlineCustomer;
-import model.Product;
 import model.ShoppingCart;
 import model.Shopping_Assns;
 
 /**
- * Servlet implementation class List_products
+ * Servlet implementation class Check_out
  */
-@WebServlet("/List_products")
-public class List_products extends HttpServlet {
+@WebServlet("/Check_out")
+public class Check_out extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public List_products() {
+    public Check_out() {
         super();
-
-    }
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		doProcess(request,response);
-	}
-	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String Sign_out ="<a href=\"/Shoping_cart/SignIn.jsp\"> Sign out</a> ";
-		 
-		HttpSession session = request.getSession(true);
+      }
+    protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	HttpSession session = request.getSession(true);
 		if(session.getAttribute("User") == null){
 			OnlineCustomer user = new OnlineCustomer();
 			user.setFirstname("Customer");
@@ -48,13 +38,25 @@ public class List_products extends HttpServlet {
 			All_DB.insert(user_class);
 			session.setAttribute("User", user);
 		}
-		OnlineCustomer user = new OnlineCustomer();
-		
-    	user = (OnlineCustomer) session.getAttribute("User");/////change
+    	System.out.println(session.getAttribute("User").toString());
+    	OnlineCustomer user = new OnlineCustomer();
+    	user = (OnlineCustomer) session.getAttribute("User");
+    	long user_id = user.getId();
+    	int Quantity_left, Quantity_selected;
+    	long product_id = 0;
+    	for(ShoppingCart my_cart:All_DB.select_shopping_cart(user_id)){
+    		product_id = my_cart.getProductId();
+    		
+    		Quantity_left = All_DB.select_single_product(product_id).getQuantity();
+    		Quantity_selected = my_cart.getUnitQuantity();
+    		
+    		All_DB.update_product(product_id, Quantity_left - Quantity_selected, -1);
+    		
+    	}
+    	All_DB.delete_cart(user_id);
+   
     	All_DB store_in_db = new All_DB();
-    
 
-			
 			List <ShoppingCart> my_cart = new ArrayList<ShoppingCart>();
 			my_cart = All_DB.select_shopping_cart(user.getId());
 			
@@ -62,19 +64,16 @@ public class List_products extends HttpServlet {
 			session.setAttribute("my_cart", my_cart);
 	
 			session.setAttribute("All_DB", store_in_db);
- 
-		
-		if(All_DB.select_all_products() != null){
-		session = request.getSession();
-        
-		List<Product> products = new ArrayList<Product>();
-		products = All_DB.select_all_products();
-		session.setAttribute("Products", products);
-			request.setAttribute("sign_in_out", Sign_out);
-			getServletContext().getRequestDispatcher("/Product_List.jsp").forward(request,response);
-		}
+		String Page = "/Profile.jsp";
+
+    	getServletContext().getRequestDispatcher(Page).forward(request,response);
 	}
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doProcess(request,response);
+	}
+
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcess(request,response);
 	}

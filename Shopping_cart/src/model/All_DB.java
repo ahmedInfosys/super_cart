@@ -192,6 +192,25 @@ import javax.persistence.TypedQuery;
 			return cart;
 		}
 		//////////////////////////////////////////////////////////////////////////////////////////
+		////////////////////////////////for reviews////////////////////////////////////////////////
+		
+		public static List<Comment> select_all_comments(long product_id){
+			EntityManager em = DBUtil.getEmFactory().createEntityManager();
+			String qString = "select com from  Comment com  where com.postId = :ID";
+			TypedQuery <Comment> List_of_table = em.createQuery(qString, Comment.class);
+			List_of_table.setParameter("ID", product_id);
+			List<Comment> list_of_comments;
+			try{
+				list_of_comments = List_of_table.getResultList();
+				if(list_of_comments == null || list_of_comments.isEmpty()){
+					list_of_comments = null;
+				}
+			}finally{
+				em.close();
+			}
+			return list_of_comments;
+		}
+		///////////////////////////////////////////////////////////////////////////////////////////
 		public static void insert(Shopping_Assns shopping_classes) {
 			EntityManager em = DBUtil.getEmFactory().createEntityManager();
 			EntityTransaction trans = em.getTransaction();
@@ -208,6 +227,9 @@ import javax.persistence.TypedQuery;
 				}else if(shopping_classes.getCart() != null){
 					ShoppingCart cart = shopping_classes.getCart();
 					em.persist(cart);
+				}else if(shopping_classes.getComment() != null){
+					Comment Comm = shopping_classes.getComment();
+					em.persist(Comm);
 				}
 				trans.commit();
 			} catch (Exception e) {
@@ -235,7 +257,7 @@ import javax.persistence.TypedQuery;
 			}
 		}
 			
-		public static Product update_product(long id,int quantity, double price, int user_id ){//key = 0 for quantity, 1 for price
+		public static Product update_product(long id,int quantity, double price){//key = 0 for quantity, 1 for price
 			EntityManager em = DBUtil.getEmFactory().createEntityManager();
 
 			Product Pro = new Product();
@@ -245,7 +267,6 @@ import javax.persistence.TypedQuery;
 				em.getTransaction().begin();
 				if(quantity != -1) Pro.setQuantity(quantity);
 				else if(price != -1) Pro.setPrice(price);
-				else if (user_id != -1) Pro.setUserid(user_id);
 				em.getTransaction().commit();
 				
 			}catch(NoResultException e){
@@ -277,14 +298,14 @@ import javax.persistence.TypedQuery;
 //			}
 //		}
 			
-		public static void delete_item (long product_id){
+		public static void delete_item (long item_id){
 			EntityManager em = DBUtil.getEmFactory().createEntityManager();
-			String qString = "delete from  ShoppingCart s where s.productId = :ID";
+			String qString = "delete from  ShoppingCart s where s.id = :ID";
 			EntityTransaction trans = em.getTransaction();
 			trans.begin(); 
 			try{
 				Query q = em.createQuery(qString,  ShoppingCart.class);
-			    q.setParameter("ID", product_id).executeUpdate();
+			    q.setParameter("ID", item_id).executeUpdate();
 			    trans.commit();
 			}catch(Exception e){
 				System.out.println(e);

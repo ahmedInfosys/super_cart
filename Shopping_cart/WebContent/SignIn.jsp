@@ -26,20 +26,29 @@
       </ul> 
     </div>  
 </nav>
-<br><br><br>
-<div class ="col-sm-4 col-sm-offset-4">
-	<p> ${invalid_user}<p>
-	<form class= "text-center" action="My_Profile"  method="get">
-		Email:<br>
-		<input type="text" class="form-control" placeholder= "ex. join@domain.com" name="email" required> </input><br>
-		<br>
-		Zip Code:
-		<input type="password" class="form-control" placeholder="ex. 12345" name="password" required> </input><br>
+<br><br><br>  
+<div class ="col-sm-3 col-sm-offset-4">
 
-		${Sign_up}<br>
-		<button type="submit"  value = "submit" class= "button btn-primary form-control">Sign In</button><br>
+       <div class= "panel-heading">
+                 
+			<p> ${invalid_user}<p>
+		</div>	
+		<div class ="panel-body">
+	
+			<form class= "text-center" action="My_Profile"  method="get">
+				Email:<br>
+				<input type="text" class="form-control" placeholder= "ex. join@domain.com" name="email" required> </input><br>
+				<br>
+				Zip Code:
+				<input type="password" class="form-control" placeholder="ex. 12345" name="password" required> </input><br>
 		
-	</form>
+				${Sign_up}<br>
+				<div class ="col-sm-4 col-sm-offset-3">
+				    <button type="submit"  value = "submit" class= "button btn-primary form-control">Sign In</button><br>
+				</div>
+			</form>
+	  </div>
+	 
 </div>
 </body>
 </html></html>

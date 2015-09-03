@@ -18,8 +18,11 @@ public class Test_All {
 //		pro.setQuantity(1);
 //		pro.setUserid(1);
 		
-		All_DB.delete_item(3);
-		
+//		All_DB.delete_item(3);
+//		for(Comment comm:All_DB.select_all_comments(4) ){
+//			System.out.println(comm.getContentText());
+//		}
+		System.out.println( All_DB.select_single_product(1).getPicture());
 //		cust.setFirstname("Ahmed 2");
 //		cust.setLastname("Hameed 2");
 		//All_DB.insert_customer(cust);

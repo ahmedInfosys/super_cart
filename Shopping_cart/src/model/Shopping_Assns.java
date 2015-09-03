@@ -4,6 +4,13 @@ public class Shopping_Assns {
 	private Product product;
 	private OnlineCustomer customer;
 	private ShoppingCart cart;
+	private Comment comment;
+	public Comment getComment() {
+		return comment;
+	}
+	public void setComment(Comment comment) {
+		this.comment = comment;
+	}
 	public ShoppingCart getCart() {
 		return cart;
 	}

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -41,18 +43,32 @@ right: 0px;
 <body background="http://www.freewallpaperfullhd.com/wp-content/uploads/2015/02/Nature-Wallpaper-HD-1920x1080.jpg">
 
 <nav class="navbar navbar-default" >
-	<ul class="nav navbar-nav navbar-left">  
-	   <li role="presentation" >Welcome <b>${sessionScope.User.getFirstname()} ${sessionScope.User.getLastname()}</b></li>
-	    <li role="presentation"><a href="/Shopping_cart/My_Profile"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+	<ul class="nav navbar-nav navbar-left">
+	   <li role="presentation" >Welcome <b>${sessionScope.User.getFirstname()} ${sessionScope.User.getLastname()} </b></li>
+	   <c:choose>
+	   <c:when test="${sessionScope.User.getFirstname() != ('Customer')}">   
+	      <li role="presentation"><a href="/Shopping_cart/My_Profile"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+	   </c:when>
+	   </c:choose>
 	   <li role="presentation"><a href="/Shopping_cart/List_products"><span class="glyphicon glyphicon-book"></span>Products</a></li>
-	   <li role="presentation"><a href="/Shopping_cart/my_shopping_cart"><span class="glyphicon glyphicon-shopping-cart"></span>Shopping cart</a></li>
-	   <li role="presentation"><a href="/Shopping_cart/ready_checkout">Check out</a></li>
+	   <li role="presentation"><a href="/Shopping_cart/my_shopping_cart"><span class="glyphicon glyphicon-shopping-cart"></span>Shopping cart <span class="badge">  ${my_cart.size()}</span></a></li>
+	   <li role="presentation"><a href="/Shopping_cart/Checkout.jsp">Check out</a></li>
 	   <li role="presentation"><a href="/Shopping_cart/Search"><span class="glyphicon glyphicon-search"></span>Search products</a></li>
 	</ul>
 	<ul class="nav navbar-nav navbar-right">
-		<li role="presentation" >${sign_in_out}</li>
+	<c:choose>
+	<c:when test="${sessionScope.User.getFirstname() == ('Customer')}">
+	    <li role="presentation"><a  href="/Shopping_cart/SignIn.jsp">Sign in</a></li>
+	    <li role="presentation"><a  href="/Shopping_cart/SignUp.jsp">Create account</a></li>
+	 </c:when>
+	 <c:otherwise>
+	   <li role="presentation"><a  href="/Shopping_cart/Logout?click=1">Sign out</a></li>
+	 </c:otherwise>
+	 </c:choose>
+	 
     </ul>
-</nav> 
+</nav>
+ 
 
 <div class="panel panel-primary col-sm-5 col-sm-offset-4">
 		<div class= "panel-heading">
@@ -63,7 +79,6 @@ right: 0px;
 	  		<p><span class="glyphicon glyphicon-user"></span><b> Name:  </b> ${sessionScope.User.getFirstname()} ${sessionScope.User.getLastname()}</p> 
     		<p><span class="glyphicon glyphicon-envelope"> </span><b> Email Address: </b>${sessionScope.User.getEmail()}  </p>
     		<p><span class="glyphicon glyphicon-calendar"> </span><b> Join Date: </b> ${sessionScope.User.getJoinDate()}   </p>
-		      ${Details}
 	</div>
 	</div>
 

@@ -43,17 +43,31 @@ right: 0px;
 
 <nav class="navbar navbar-default" >
 	<ul class="nav navbar-nav navbar-left">
-	   <li role="presentation" >Welcome <b>${sessionScope.User.getFirstname()} ${sessionScope.User.getLastname()}</b></li>
-	    <li role="presentation"><a href="/Shopping_cart/My_Profile"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+	   <li role="presentation" >Welcome <b>${sessionScope.User.getFirstname()} ${sessionScope.User.getLastname()} </b></li>
+	   <c:choose>
+	   <c:when test="${sessionScope.User.getFirstname() != ('Customer')}">   
+	      <li role="presentation"><a href="/Shopping_cart/My_Profile"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+	   </c:when>
+	   </c:choose>
 	   <li role="presentation"><a href="/Shopping_cart/List_products"><span class="glyphicon glyphicon-book"></span>Products</a></li>
-	   <li role="presentation"><a href="/Shopping_cart/my_shopping_cart"><span class="glyphicon glyphicon-shopping-cart"></span>Shopping cart</a></li>
-	   <li role="presentation"><a href="/Shopping_cart/ready_checkout">Check out</a></li>
+	   <li role="presentation"><a href="/Shopping_cart/my_shopping_cart"><span class="glyphicon glyphicon-shopping-cart"></span>Shopping cart <span class="badge">  ${my_cart.size()}</span></a></li>
+	   <li role="presentation"><a href="/Shopping_cart/Checkout.jsp">Check out</a></li>
 	   <li role="presentation"><a href="/Shopping_cart/Search"><span class="glyphicon glyphicon-search"></span>Search products</a></li>
 	</ul>
 	<ul class="nav navbar-nav navbar-right">
-		<li role="presentation" >${sign_in_out}</li>
+	<c:choose>
+	<c:when test="${sessionScope.User.getFirstname() == ('Customer')}">
+	    <li role="presentation"><a  href="/Shopping_cart/SignIn.jsp">Sign in</a></li>
+	    <li role="presentation"><a  href="/Shopping_cart/SignUp.jsp">Create account</a></li>
+	 </c:when>
+	 <c:otherwise>
+	   <li role="presentation"><a  href="/Shopping_cart/Logout?click=1">Sign out</a></li>
+	 </c:otherwise>
+	 </c:choose>
+	 
     </ul>
-</nav> 
+</nav>
+
 
 <div class="row">
   <div class="col-sm-6 col-sm-offset-3">

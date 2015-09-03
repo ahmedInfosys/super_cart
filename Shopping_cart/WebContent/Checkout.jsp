@@ -19,14 +19,28 @@
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.min.js"></script>
-<title>Product List</title>
-<style>h1{background: black; text:white}
+<title>Comments area</title>
+<style>h1{background: black; text:white}</style>
+<style>
+img{
+    position: relative;
+    width: 100px;
+    height: 100px;
+    float: right;
+    border: 3px solid #8AC007;
+
+}
+
+p.navbar-text{
+position: relative;
+float: right;
+right: 0px;
+}
 
 </style>
 
 </head>
-<body>
-
+<body >
 
 <nav class="navbar navbar-default" >
 	<ul class="nav navbar-nav navbar-left">
@@ -48,7 +62,7 @@
 	    <li role="presentation"><a  href="/Shopping_cart/SignUp.jsp">Create account</a></li>
 	 </c:when>
 	 <c:otherwise>
-	   <li role="presentation"><a  href="/Shopping_cart/SignIn.jsp">Sign out</a></li>
+	   <li role="presentation"><a  href="/Shopping_cart/Logout?click=1">Sign out</a></li>
 	 </c:otherwise>
 	 </c:choose>
 	 
@@ -57,46 +71,30 @@
 <c:set var="sum" value="${0}"/>   
 <c:forEach var="cart_item" items="${my_cart}">
 
-<c:set var="sum" value="${sum + sessionScope.All_DB.select_single_product(cart_item.getProductId()).getPrice()}"/> 
-<nav class="navbar navbar-default col-sm-10">
-	 <p class="navbar-text navbar-default col-sm-offset-10" ><b>Product Name: </b> ${sessionScope.All_DB.select_single_product(cart_item.getProductId()).getName()} </p>
-				<ul class="nav nav-pills nav-right col-sm-offset-9"> 
-				     <p class="navbar-text navbar-default"><b>Price: </b><fmt:formatNumber value='${cart_item.getUnitPrice()}' type="currency" groupingUsed='true' />  <b> Qty: </b> ${cart_item.getUnitQuantity()}</p>
-					<li role="presentation" class="active">
-					        <a href="my_shopping_cart?remove_item=${cart_item.getId()}">Remove Item</a>
-					</li>
-				</ul> 
-</nav>
+<c:set var="sum" value="${sum + cart_item.getUnitPrice()*cart_item.getUnitQuantity()}"/> 
 </c:forEach>
+<c:set var="sum" value="${sum}"/> 
 
-<br><br><br><br>
-<c:choose>
-    <c:when test="${my_cart.isEmpty()}">
-        <p class="navbar-text navbar-center">Your shopping cart is empty</p>
-        <br />
-     </c:when>
-  	 <c:when test="${my_cart.size() == 1}">
-			   <p class="navbar-text navbar-center">You Have 1 item in your shopping cart</p>
-			   <ul class="nav nav-pills nav-left col-sm-offset-9">
-		       <li role="presentation" class="active"><a href="my_shopping_cart?remove_all=${sessionScope.User.getId()}">  Remove all  </a></li>  
-		       <li role="presentation" class="active"><a href="/Shopping_cart/Checkout.jsp">  Check out  </a></li>  
-		       </ul>
-	</c:when>
-     <c:when test="${my_cart.size() > 1}">
-		   
-		       <p class="navbar-text navbar-center">You Have ${my_cart.size()} item in your shopping cart</p>   
-		       <ul class="nav nav-pills nav-left col-sm-offset-9">
-		       <li role="presentation" class="active"><a href="my_shopping_cart?remove_all=${sessionScope.User.getId()}">  Remove all  </a></li>  
-		       <li role="presentation" class="active"><a href="/Shopping_cart/Checkout.jsp">  Check out  </a></li>  
-		       </ul>
-     </c:when>
+
     
-</c:choose>
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<ul class="nav nav-pills nav-default col-sm-offset-5">
+<p class="nav nav-pills nav-default  col-sm-offset-5"><b>Sub-total:   </b>  <fmt:formatNumber value='${sum}' type="currency"  /><br>
+     <b>Tax:        </b>        <fmt:formatNumber value='${(0.06*sum)}' type="currency"  /><br>
+    <b>Grand total: </b><fmt:formatNumber value='${sum + (0.06*sum)}' type="currency"  /><br>
+   </p><br><br><br>
+    <c:if test="${param.buy_all==1}">
+        <p> Thank you for buying with us, you order will be shipped soon </p>
+        <c:redirect url="/Profile.jsp"></c:redirect>
+    </c:if>
+   
+        <li role="presentation" class="active col-sm-3">
+				     <a href="/Shopping_cart/Check_out?buy_all=1">  Buy </a>
+		</li>	
+</ul>
 
 
-
-			
-			
-
+  
 </body>
 </html>
