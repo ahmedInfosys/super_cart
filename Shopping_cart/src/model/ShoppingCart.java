@@ -34,6 +34,10 @@ public class ShoppingCart implements Serializable {
 	@Column(name="UNIT_QUANTITY")
 	private int unitQuantity;
 
+	@Column(name="PAST_PURCHASE")
+	private int past_purcharse;
+	
+	
 	@Column(name="USER_ID")
 	private long userId;
 
@@ -86,6 +90,15 @@ public class ShoppingCart implements Serializable {
 
 	public void setUserId(long userId) {
 		this.userId = userId;
+	}
+	
+	
+	public int getPastPurchase() {
+		return this.past_purcharse;
+	}
+
+	public void setPastPurchase(int past_purcharse) {
+		this.past_purcharse = past_purcharse;
 	}
 
 }

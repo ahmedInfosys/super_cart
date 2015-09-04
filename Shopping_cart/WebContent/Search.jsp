@@ -85,13 +85,15 @@ right: 0px;
 </div><!-- /.row -->
 <br><br>
 <c:forEach var="found_product" items="${found_products}">
-<nav class="navbar navbar-default col-sm-10"> 
-			 <p class="navbar-text navbar-default col-sm-offset-10" ><b>Product Name: </b>${found_product.getName()}  </p>
+<nav class="navbar navbar-default col-sm-8"> 
+              <li role="presentation" class="active">
+			 <p class="navbar-text navbar-left col-sm-offset-10" ><b>Product Name: </b>${found_product.getName()}  </p></li>
 		     <ul class="nav nav-pills nav-right col-sm-offset-9"> 
-                    <p class="navbar-text navbar-default"><b>Price: </b>${found_product.getPrice()}<b> Qty: </b> ${found_product.getQuantity()}  </p>
+		            <li role="presentation" class="active">
+                    <p class="navbar-text navbar-default"><b>Price: </b>${found_product.getPrice()}<b> Qty: </b> ${found_product.getQuantity()}  </p></li>
 			        <li role="presentation" class="active"><a href="Product_details?productID=${found_product.getId()}" > 
 				        <span class="glyphicon glyphicon-align-justify"></span> View</a></li>
-			        <li role="presentation" class="active"><a href="my_shopping_cart?productID=${found_product.getId()}" ><span class="glyphicon glyphicon-plus"></span> Add</a></li>
+			        
 			 </ul>
 			 </nav>
 </c:forEach>

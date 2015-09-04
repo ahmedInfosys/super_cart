@@ -22,11 +22,11 @@ public class Test_All {
 //		for(Comment comm:All_DB.select_all_comments(4) ){
 //			System.out.println(comm.getContentText());
 //		}
-		System.out.println( All_DB.select_single_product(1).getPicture());
+		
 //		cust.setFirstname("Ahmed 2");
 //		cust.setLastname("Hameed 2");
 		//All_DB.insert_customer(cust);
-		
+		All_DB.update_product(2, 2, -1);
 //		Shopping_Assns pro_class = new Shopping_Assns();
 //		
 //		pro_class.setProduct(pro);

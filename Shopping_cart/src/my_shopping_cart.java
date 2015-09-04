@@ -64,6 +64,7 @@ public class my_shopping_cart extends HttpServlet {
 				my_cart.setProductId(product_id);
 				my_cart.setUserId(user.getId());
 				my_cart.setUnitPrice(All_DB.select_single_product(product_id).getPrice());
+				my_cart.setPastPurchase(0);
 				System.out.println("request.getParameter() issssss" + request.getParameter("Qty_from_details"));
 
 				if(request.getParameter("Qty_from_details") != null){

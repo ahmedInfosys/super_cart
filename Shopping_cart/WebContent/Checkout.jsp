@@ -89,10 +89,83 @@ right: 0px;
         <c:redirect url="/Profile.jsp"></c:redirect>
     </c:if>
    
-        <li role="presentation" class="active col-sm-3">
-				     <a href="/Shopping_cart/Check_out?buy_all=1">  Buy </a>
-		</li>	
+ 
 </ul>
+<br><br><br><br><br>
+
+<div class="panel panel-primary col-sm-5 col-sm-offset-2">
+		<div class= "panel-heading">
+                 
+			Insert credit/debit cart information below
+		</div>	
+		<div class ="panel-body col-sm-8">
+		<form action="Check_out" method="post">
+		  <ul class="nav nav-pills nav-default list-inline">
+		     <li role="presentation" class="active"> 
+		          <input type="hidden" name="place_order" value="  "/>
+				  <input class="form-control col-sm-1"  name="first_name"  id="first_name" placeholder="First Name" required/>
+			</li>
+		       <li role="presentation" class="active">    </li>
+		     <li > 
+		          <input type="hidden" name="place_order" value="  "/>
+				  <input class="form-control col-sm-1"  name="last_name"  id="last_name" placeholder="Last Name" required/>
+		     
+		     </li>
+		        <li role="presentation" class="active"> 
+		          <input type="hidden" name="place_order" value="  "/>
+				  <input class="form-control col-sm-1"  name="card_numner"  id=""card_numner"" placeholder="XXXX-XXXX-XXXX-XXXX" required/>
+		     
+		     </li>
+		     
+		      <li role="presentation" class="active"> 
+		          <input type="hidden" name="place_order" value="  "/>
+				  <input class="form-control col-sm-1"  name="street_address"  id=""street_address"" placeholder="Street Address" required/>
+		     
+		     </li>
+		      <li role="presentation" class="active"> 
+		          <input type="hidden" name="place_order" value="  "/>
+				  <input class="form-control col-sm-1"  name="city"  id="city" placeholder="City" required/>
+		     
+		     </li>
+		      <li role="presentation" class="active"> 
+		          <input type="hidden" name="place_order" value="  "/>
+				  <input class="form-control col-sm-1"  name="state"  id="state" placeholder="State" required/>
+		     
+		     </li>
+		      <li role="presentation" class="active"> 
+		          <input type="hidden" name="place_order" value="  "/>
+				  <input class="form-control col-sm-1"  name="zip_code"  id="zip_code" placeholder="zipcode" required/>
+		     
+		     </li>
+		     
+		     <br><br><br><br><br><br><br><br><br>><br><br><br><br><br>
+		     
+		     <li role="presentation" class="active"> 
+		         
+ Expiration month:<select class="form-control " id="exp_month" name="exp_month"> 
+		         <c:forEach items="${months}" var="month" begin="00" end="12" step="1" >
+		            <option >month</option>
+		         </c:forEach>
+		         </select>
+		     </li>
+	
+			<li role="presentation" class="active"> 
+		         
+ Expiration year:<select class="form-control " id="exp_year" name="exp_year"> 
+		         <c:forEach items="${years}" var="year" begin="00" end="12" step="1" >
+		            <option >year</option>
+		         </c:forEach>
+		         </select>
+			</li>
+
+      		 <li role="presentation" class="active col-sm-3">
+				     <a href="/Shopping_cart/Check_out?buy_all=1">  Buy </a>
+				</li>	
+	  	</ul>
+	  	</form>
+	</div>
+</div>
+
 
 
   

@@ -80,7 +80,7 @@ right: 0px;
     		<p><span class="glyphicon glyphicon-envelope"> </span><b> Email Address: </b>${sessionScope.User.getEmail()}  </p>
     		<p><span class="glyphicon glyphicon-calendar"> </span><b> Join Date: </b> ${sessionScope.User.getJoinDate()}   </p>
 	</div>
-	</div>
+</div>
 
   
 </body>

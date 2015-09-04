@@ -20,7 +20,7 @@ import javax.persistence.TypedQuery;
 /////////////////////////////////For Product table///////////////////////////////////////////
 		public static List<Product> select_all_products(){
 			EntityManager em = DBUtil.getEmFactory().createEntityManager();
-			String qString = "select p from Product p ";
+			String qString = "select p from Product p where p.quantity > 0";
 			TypedQuery <Product> List_of_table = em.createQuery(qString, Product.class);
 			
 			List<Product> list_of_products;
@@ -37,7 +37,7 @@ import javax.persistence.TypedQuery;
 		
 		public static List<Product> Search(String search){
 			EntityManager em = DBUtil.getEmFactory().createEntityManager();
-			String qString = "select p from Product p where lower(p.name) like :search ";
+			String qString = "select p from Product p where lower(p.name) like :search and p.quantity > 0";
 
 			TypedQuery <Product> List_of_table = em.createQuery(qString, Product.class);
 
@@ -211,6 +211,38 @@ import javax.persistence.TypedQuery;
 			return list_of_comments;
 		}
 		///////////////////////////////////////////////////////////////////////////////////////////
+		////////////////////////////for Payment card///////////////////////////////////////////////
+		
+		public static List<PaymentCard> select_card(
+				String first_name,String last_name,String street_address,String city,String state,String zipcode,
+				String exp_month,String exp_year
+				){
+			String exp_date = exp_month + "/" + exp_year;
+			EntityManager em = DBUtil.getEmFactory().createEntityManager();
+			String qString = "select p from PaymentCard p where p.firstName = :first_name and p.lastName = : last_name "
+					+ "and p.billingStreetAddress = : street_address and p.billingCity = :city and p.billingState = :state"
+					+ "and p.billingZipCode = :zipcode and p.expirationDate = :exp_date";
+					
+			TypedQuery <PaymentCard> List_of_table = em.createQuery(qString, PaymentCard.class);
+			List_of_table.setParameter("first_name", first_name);
+			List_of_table.setParameter("last_name", last_name);
+			List_of_table.setParameter("street_address", street_address);
+			List_of_table.setParameter("city", city);
+			List_of_table.setParameter("state", state);
+			List_of_table.setParameter("zipcode", zipcode);
+			List_of_table.setParameter("exp_date", exp_date);
+			List<PaymentCard> list_of_accounts;
+			try{
+				list_of_accounts = List_of_table.getResultList();
+				if(list_of_accounts == null || list_of_accounts.isEmpty()){
+					list_of_accounts = null;
+				}
+			}finally{
+				em.close();
+			}
+			return list_of_accounts;
+		}
+		//////////////////////////////////////////////////////////////////////////////////////////////
 		public static void insert(Shopping_Assns shopping_classes) {
 			EntityManager em = DBUtil.getEmFactory().createEntityManager();
 			EntityTransaction trans = em.getTransaction();
@@ -244,10 +276,9 @@ import javax.persistence.TypedQuery;
 			EntityTransaction trans = em.getTransaction();
 			trans.begin(); 
 			try {
-				
+
 					em.persist(cust);
 					trans.commit();
-
 				
 			} catch (Exception e) {
 				System.out.println(e);	
@@ -257,16 +288,16 @@ import javax.persistence.TypedQuery;
 			}
 		}
 			
-		public static Product update_product(long id,int quantity, double price){//key = 0 for quantity, 1 for price
+		public static void update_product(long id,int quantity, double price){
 			EntityManager em = DBUtil.getEmFactory().createEntityManager();
 
 			Product Pro = new Product();
 			try{
 				Pro = em.find(Product.class, id);
-				
 				em.getTransaction().begin();
 				if(quantity != -1) Pro.setQuantity(quantity);
 				else if(price != -1) Pro.setPrice(price);
+		
 				em.getTransaction().commit();
 				
 			}catch(NoResultException e){
@@ -274,7 +305,25 @@ import javax.persistence.TypedQuery;
 			}finally{
 				em.clear();
 			}
-			return Pro;
+		}
+		
+//		
+		public static void update_cart(long cart_id, String date, int past_purchase){
+			EntityManager em = DBUtil.getEmFactory().createEntityManager();
+			ShoppingCart my_cart = new ShoppingCart();
+			
+			try{
+				my_cart = em.find(ShoppingCart.class, cart_id);
+				em.getTransaction().begin();
+                my_cart.setPastPurchase(past_purchase);
+                my_cart.setPurchaseDate(date);
+				em.getTransaction().commit();
+				
+			}catch(NoResultException e){
+				e.printStackTrace();
+			}finally{
+				em.clear();
+			}
 		}
 //		public static void update(Shopping_Assns shopping_classes) {
 //			EntityManager em = DBUtil.getEmFactory().createEntityManager();
