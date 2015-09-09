@@ -1,9 +1,7 @@
 package model;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.math.BigDecimal;
 
 
@@ -13,13 +11,13 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name="COMMENTS",schema="TESTDB")
-@NamedQuery(name="Comment.findAll", query="SELECT com FROM Comment com")
+@NamedQuery(name="Comment.findAll", query="SELECT c FROM Comment c")
 public class Comment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "COMMENTS_SEQ1", catalog = "",schema="TESTDB",allocationSize = 1,initialValue = 1)
-	@GeneratedValue(strategy =  GenerationType.SEQUENCE,generator="COMMENTS_SEQ1")
+	@SequenceGenerator(name = "COMMENTS_SEQ", catalog = "",schema="TESTDB",allocationSize = 1,initialValue = 1)
+	@GeneratedValue(strategy =  GenerationType.SEQUENCE,generator="COMMENTS_SEQ")
 	@Column(name="COMMENT_ID")
 	private long commentId;
 
@@ -33,7 +31,7 @@ public class Comment implements Serializable {
 	private long postId;
 
 	@Column(name="RATING_SCALE")
-	private long ratingScale;
+	private int ratingScale;
 
 	@Column(name="USER_ID")
 	private long userId;
@@ -73,11 +71,11 @@ public class Comment implements Serializable {
 		this.postId = postId;
 	}
 
-	public long getRatingScale() {
+	public int getRatingScale() {
 		return this.ratingScale;
 	}
 
-	public void setRatingScale(long ratingScale) {
+	public void setRatingScale(int ratingScale) {
 		this.ratingScale = ratingScale;
 	}
 

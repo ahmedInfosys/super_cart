@@ -213,34 +213,57 @@ import javax.persistence.TypedQuery;
 		///////////////////////////////////////////////////////////////////////////////////////////
 		////////////////////////////for Payment card///////////////////////////////////////////////
 		
-		public static List<PaymentCard> select_card(
+		public static PaymentCard select_card(
 				String first_name,String last_name,String street_address,String city,String state,String zipcode,
-				String exp_month,String exp_year
+				String exp_month,String exp_year, long cardnumber
 				){
-			String exp_date = exp_month + "/" + exp_year;
+			String exp_month_format = null;
+			String exp_date = exp_month_format.format("%02d", Integer.parseInt(exp_month)) + "/" + exp_year;
 			EntityManager em = DBUtil.getEmFactory().createEntityManager();
-			String qString = "select p from PaymentCard p where p.firstName = :first_name and p.lastName = : last_name "
-					+ "and p.billingStreetAddress = : street_address and p.billingCity = :city and p.billingState = :state"
-					+ "and p.billingZipCode = :zipcode and p.expirationDate = :exp_date";
-					
-			TypedQuery <PaymentCard> List_of_table = em.createQuery(qString, PaymentCard.class);
-			List_of_table.setParameter("first_name", first_name);
-			List_of_table.setParameter("last_name", last_name);
-			List_of_table.setParameter("street_address", street_address);
-			List_of_table.setParameter("city", city);
-			List_of_table.setParameter("state", state);
-			List_of_table.setParameter("zipcode", zipcode);
-			List_of_table.setParameter("exp_date", exp_date);
-			List<PaymentCard> list_of_accounts;
+			String qString = "select p from PaymentCard p where lower(p.firstName) = :first_name and lower(p.lastName) = :last_name "
+					+ "and lower(p.billingStreetAddress) = :street_address and lower(p.billingCity) = :city and lower(p.billingState) = :state "
+					+ " and p.billingZipCode = :zipcode and p.expirationDate = :exp_date and p.cardNumber = :cardnumber";
+					System.out.println(exp_date);
+			TypedQuery <PaymentCard> q = em.createQuery(qString, PaymentCard.class);
+			q.setParameter("first_name", first_name);
+			q.setParameter("last_name", last_name);
+			q.setParameter("street_address", street_address);
+			q.setParameter("city", city);
+			q.setParameter("state", state);
+			q.setParameter("zipcode", zipcode);
+			q.setParameter("exp_date", exp_date);
+			q.setParameter("cardnumber", cardnumber);
+			PaymentCard my_card = new PaymentCard();
 			try{
-				list_of_accounts = List_of_table.getResultList();
-				if(list_of_accounts == null || list_of_accounts.isEmpty()){
-					list_of_accounts = null;
-				}
+				my_card = q.getSingleResult();
+				
+			}catch(NoResultException e){
+				my_card = null;
+				System.out.println(e);
 			}finally{
-				em.close();
+				em.clear();
 			}
-			return list_of_accounts;
+			return my_card;
+		}
+		//////////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////for orders///////////////////////////////////////////////////
+		public static List<Order> select_order(long user_id){
+			EntityManager em = DBUtil.getEmFactory().createEntityManager();
+			String qString = "select o from  Order o where o.userId = :ID";
+			TypedQuery <Order> q = em.createQuery(qString, Order.class);
+			
+			q.setParameter("ID", user_id);
+			
+			List <Order> my_orders = new ArrayList<Order>();
+			try{
+				my_orders = q.getResultList();
+				
+			}catch(NoResultException e){
+				System.out.println(e);
+			}finally{
+				em.clear();
+			}
+			return my_orders;
 		}
 		//////////////////////////////////////////////////////////////////////////////////////////////
 		public static void insert(Shopping_Assns shopping_classes) {
@@ -262,6 +285,12 @@ import javax.persistence.TypedQuery;
 				}else if(shopping_classes.getComment() != null){
 					Comment Comm = shopping_classes.getComment();
 					em.persist(Comm);
+				}else if(shopping_classes.getTransaction() != null){
+					Transaction tran = shopping_classes.getTransaction();
+					em.persist(tran);
+				}else if(shopping_classes.getOrder() != null){
+					Order order = shopping_classes.getOrder();
+					em.persist(order);
 				}
 				trans.commit();
 			} catch (Exception e) {
@@ -317,6 +346,24 @@ import javax.persistence.TypedQuery;
 				em.getTransaction().begin();
                 my_cart.setPastPurchase(past_purchase);
                 my_cart.setPurchaseDate(date);
+				em.getTransaction().commit();
+				
+			}catch(NoResultException e){
+				e.printStackTrace();
+			}finally{
+				em.clear();
+			}
+		}
+		
+		public static void update_card(long card_id, double balance){
+			EntityManager em = DBUtil.getEmFactory().createEntityManager();
+			PaymentCard my_card = new PaymentCard();
+			
+			try{
+				my_card = em.find(PaymentCard.class, card_id);
+				em.getTransaction().begin();
+                my_card.setBalance(balance);
+               
 				em.getTransaction().commit();
 				
 			}catch(NoResultException e){

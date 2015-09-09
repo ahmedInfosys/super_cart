@@ -92,7 +92,7 @@ public class Product_details extends HttpServlet {
         	comment.setCommentDate(sdf.format(now));
         	comment.setContentText(request.getParameter("review"));
         	comment.setPostId(product_id);
-        	comment.setRatingScale(Long.parseLong(request.getParameter("scale")));
+        	comment.setRatingScale(Integer.parseInt(request.getParameter("scale")));
         	comment.setUserId(user.getId());
         	
         	

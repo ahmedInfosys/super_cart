@@ -37,10 +37,10 @@
 	
 			<form class= "text-center" action="My_Profile"  method="get">
 				Email:<br>
-				<input type="text" class="form-control" placeholder= "ex. join@domain.com" name="email" required> </input><br>
+				<input type="text" class="form-control" placeholder= "ex. join@domain.com" name="email" required> <br>
 				<br>
 				Zip Code:
-				<input type="password" class="form-control" placeholder="ex. 12345" name="password" required> </input><br>
+				<input type="password" class="form-control" placeholder="ex. 12345" name="password" required> <br>
 		
 				${Sign_up}<br>
 				<div class ="col-sm-4 col-sm-offset-3">

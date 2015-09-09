@@ -8,6 +8,8 @@
 		<class>model.Comment</class>
 		<class>model.PaymentCard</class>
 		<class>model.Transaction</class>
+		<class>model.Order</class>
+		<class>model.Purchas</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:xe"/>

@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class Test_All {
+public class All_Test {
 
 	@Test
 	public void test() {
@@ -26,7 +26,11 @@ public class Test_All {
 //		cust.setFirstname("Ahmed 2");
 //		cust.setLastname("Hameed 2");
 		//All_DB.insert_customer(cust);
-		All_DB.update_product(2, 2, -1);
+		//All_DB.update_product(2, 2, -1);
+		
+		String num = null,num2 = null;
+		num2 = num.format("%02s", 3);
+		System.out.println(num2);
 //		Shopping_Assns pro_class = new Shopping_Assns();
 //		
 //		pro_class.setProduct(pro);

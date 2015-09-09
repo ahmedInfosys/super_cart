@@ -5,6 +5,20 @@ public class Shopping_Assns {
 	private OnlineCustomer customer;
 	private ShoppingCart cart;
 	private Comment comment;
+	private Transaction transaction;
+	private Order order;
+	public Order getOrder() {
+		return order;
+	}
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+	public Transaction getTransaction() {
+		return transaction;
+	}
+	public void setTransaction(Transaction transaction) {
+		this.transaction = transaction;
+	}
 	public Comment getComment() {
 		return comment;
 	}

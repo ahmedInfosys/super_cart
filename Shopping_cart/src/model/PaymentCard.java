@@ -1,9 +1,7 @@
 package model;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.math.BigDecimal;
 
 
@@ -18,9 +16,9 @@ public class PaymentCard implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "PAYMENT_CARD_SEQ", catalog = "",schema="TESTDB",allocationSize = 1,initialValue = 1)
-	@GeneratedValue(strategy =  GenerationType.SEQUENCE,generator="PAYMENT_CARD_SEQ")
 	private long id;
+
+	private double balance;
 
 	@Column(name="BILLING_CITY")
 	private String billingCity;
@@ -31,13 +29,11 @@ public class PaymentCard implements Serializable {
 	@Column(name="BILLING_STREET_ADDRESS")
 	private String billingStreetAddress;
 
-	@Column(name="BILLING_ZIPE_CODE")
-	private String billingZipeCode;
+	@Column(name="BILLING_ZIP_CODE")
+	private String billingZipCode;
 
 	@Column(name="CARD_NUMBER")
-	private String cardNumber;
-
-	private int code;
+	private long cardNumber;
 
 	@Column(name="EXPIRATION_DATE")
 	private String expirationDate;
@@ -47,18 +43,6 @@ public class PaymentCard implements Serializable {
 
 	@Column(name="LAST_NAME")
 	private String lastName;
-	
-	@Column(name="BALANCE")
-    private double balance;
-	
-	
-	public double getBalance() {
-		return balance;
-	}
-
-	public void setBalance(double balance) {
-		this.balance = balance;
-	}
 
 	public PaymentCard() {
 	}
@@ -69,6 +53,14 @@ public class PaymentCard implements Serializable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public double getBalance() {
+		return this.balance;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
 	}
 
 	public String getBillingCity() {
@@ -95,28 +87,20 @@ public class PaymentCard implements Serializable {
 		this.billingStreetAddress = billingStreetAddress;
 	}
 
-	public String getBillingZipeCode() {
-		return this.billingZipeCode;
+	public String getBillingZipCode() {
+		return this.billingZipCode;
 	}
 
-	public void setBillingZipeCode(String billingZipeCode) {
-		this.billingZipeCode = billingZipeCode;
+	public void setBillingZipCode(String billingZipCode) {
+		this.billingZipCode = billingZipCode;
 	}
 
-	public String getCardNumber() {
+	public long getCardNumber() {
 		return this.cardNumber;
 	}
 
-	public void setCardNumber(String cardNumber) {
+	public void setCardNumber(long cardNumber) {
 		this.cardNumber = cardNumber;
-	}
-
-	public int getCode() {
-		return this.code;
-	}
-
-	public void setCode(int code) {
-		this.code = code;
 	}
 
 	public String getExpirationDate() {

@@ -28,7 +28,7 @@ public class My_Profile extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
     protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String  FirstName = null, LastName = null, Email = null, zipCode, welcome = " ", profile_image;
+    	String  FirstName = null, LastName = null, Email = null, zipCode, profile_image;
     			
     			
     			String  Password;
